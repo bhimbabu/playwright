@@ -1,0 +1,36 @@
+import {test, expect} from '@playwright/test';
+
+test('Automaation Test', async({ page }) => {
+    await page.goto('https://testautomationpractice.blogspot.com/');
+    await expect(page).toHaveTitle('Automation Testing Practice');
+    await page.waitForTimeout(2000);
+
+    await page.locator('#name').fill('Bhim Bdr Mahato');
+    await page.locator('#email').fill('babubhim@gmail.com');
+    await page.locator('#phone').fill('9874908920');
+    await page.locator('#textarea').fill('Hi i am bhim bahadur mahato from nepal');
+    await page.locator('#male').check();
+    
+    await page.waitForSelector('#sunday', { state: 'visible' });
+    await page.locator('#sunday').scrollIntoViewIfNeeded();
+    await page.locator('#sunday').check();
+
+    await page.locator('#country').selectOption('canada');
+    await page.locator('#colors').selectOption([
+    'Red',
+    'Blue',
+    'Green'
+
+    ]);
+    await page.locator('#animals').selectOption('cat');
+    await page.evaluate(() => {
+    document.querySelector('#datepicker').value = '08/29/2025';
+    document.querySelector('#txtDate').value = '07/30/2025';
+    document.querySelector('#start-date').value = '09/29/2025';
+    document.querySelector('#end-date').value = '10/29/2025';
+  });
+
+    console.log('Form filled successfully');
+
+
+});
