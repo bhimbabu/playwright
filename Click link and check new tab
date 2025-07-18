@@ -1,0 +1,31 @@
+import { test, expect } from '@playwright/test';
+
+test('Verify Atom feed link under blog-feeds section', async ({ page, context }) => {
+  // 1. Navigate to the site
+  await page.goto('https://testautomationpractice.blogspot.com/');
+
+  // 2. Locate the blog feed link
+  const atomLink = page.locator('.blog-feeds .feed-link');
+
+  // 3. Verify the link text
+  await expect(atomLink).toHaveText('Posts (Atom)');
+
+  // 4. Verify the href attribute
+  const href = await atomLink.getAttribute('href');
+  expect(href).toBe('https://testautomationpractice.blogspot.com/feeds/posts/default');
+
+  console.log('✅ Feed link is correct:', href);
+
+  // 5. Optional: Open the link in a new tab and verify the title
+  const [newPage] = await Promise.all([
+    context.waitForEvent('page'),
+    atomLink.click(),
+  ]);
+
+  await newPage.waitForLoadState();
+  const title = await newPage.title();
+  console.log('🆕 New tab opened with title:', title);
+
+  // Close new tab
+  await newPage.close();
+});
