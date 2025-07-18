@@ -1,0 +1,25 @@
+import {test, expect} from '@playwright/test';
+
+
+test('Mouse Hover', async({ page }) => {
+    
+    await page.goto("https://testautomationpractice.blogspot.com/");
+  
+  // Locate the draggable element
+  const Mouselink = await page.locator("//button[normalize-space()='Point Me']");
+
+  // Locate the droppable area
+  const Mousemobiles = await page.locator("//a[normalize-space()='Mobiles']");
+  
+  const Mouselaptop = await page.locator("//a[normalize-space()='Laptops']");
+
+  await Mouselink.hover();
+  await Mousemobiles.hover();
+  await Mouselaptop.click();
+  // Wait for a moment to observe the result
+
+  await page.waitForTimeout(4000);
+
+  console.log("Mouse Hover Successfully");
+
+});
