@@ -1,0 +1,23 @@
+import {test, expect} from '@playwright/test';
+
+
+test('Mouse Drag and Drop', async({ page }) => {
+    
+    await page.goto("https://testautomationpractice.blogspot.com/");
+  
+  // Locate the draggable element
+  const draggable = await page.locator("#draggable");
+
+  // Locate the droppable area
+  const droppable = await page.locator("#droppable");
+  
+  // Perform the drag-and-drop action
+  await draggable.dragTo(droppable);
+  
+  
+  // Wait for a moment to observe the result
+  await page.waitForTimeout(3000);
+
+  console.log("Drag and Drop Successfully");
+
+});
