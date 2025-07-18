@@ -1,0 +1,36 @@
+import { test, expect } from '@playwright/test';
+
+test('Handle Alert, Confirm and Prompt on testautomationpractice.blogspot.com', async ({ page }) => {
+  await page.goto('https://testautomationpractice.blogspot.com/');
+  await page.mouse.wheel(0, 1000); // Scroll down
+
+  // === 🔹 SIMPLE ALERT ===
+  await Promise.all([
+    page.waitForEvent('dialog').then(async dialog => {
+      console.log('🔔 Simple Alert:', dialog.message());
+      await dialog.accept();
+    }),
+    page.locator("button[onclick='myFunctionAlert()']").click()
+  ]);
+  await page.waitForTimeout(4000);
+  // === 🔹 CONFIRM ALERT ===
+  await Promise.all([
+    page.waitForEvent('dialog').then(async dialog => {
+      console.log('🔔 Confirm Alert:', dialog.message());
+      await dialog.accept(); // Or dialog.dismiss()
+    }),
+    page.evaluate(() => confirm("Press a button!"))
+  ]);
+   await page.waitForTimeout(4000);
+  // === 🔹 PROMPT ALERT ===
+  await Promise.all([
+    page.waitForEvent('dialog').then(async dialog => {
+      console.log('🔔 Prompt Alert:', dialog.message());
+      await dialog.accept('Harry Potter'); // Enter name into prompt
+    }),
+    page.evaluate(() => prompt("Please enter your name:"))
+  ]);
+  
+     await page.waitForTimeout(4000);
+  console.log('✅ All dialog boxes handled correctly.');
+});
